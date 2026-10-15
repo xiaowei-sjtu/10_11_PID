@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "PID.h"
 
+extern volatile uint8_t stop_flag ;
+
 class Motor
 {
 public:
@@ -21,6 +23,7 @@ public:
     void setTargetSpeed(float speed);
     void motor_handle();
     void setMotorId(uint8_t motor_id);
+    void setk_frontfeedback(float k_frontfeedback);
 private:
     const float ratio_;
     float ecd_angle_ = 0;
@@ -32,6 +35,7 @@ private:
     float NormalizeDelta(float delta);
     float Ecd_to_dig( float raw_ecd_angle);
     static constexpr uint16_t kEncoderRange = 8192;
+    float k_frontfeedback_ = 0 ;
 
     PID pPID;
     PID sPID;
@@ -39,7 +43,7 @@ private:
     float targetSpeed_ = 0;
     float outCurrentA_ = 0;
     float speed_frontfeedback_ = 0;
-    float current_frontfeedback_ = 0;
+    float current_frontfeedback_ = 0.505;
     void setSpeed_ffb(float speed_ffb);
     void setCurrent_ffb(float current_ffb);
     uint8_t motor_id_ = 1;

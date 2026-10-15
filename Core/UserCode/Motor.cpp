@@ -1,13 +1,17 @@
 #include "Motor.hpp"
+#include <cmath>
+
+volatile uint8_t stop_flag = 0;
 
 Motor::Motor(float ratio): ratio_(ratio),
-pPID(0.0f, 0.0f,0.0f, 100.0f, 500.0f, 0.1f, 0.1f ),
-sPID(0.038f, 0.0f,0.02f, 100.0f, 500.0f, 0.1f, 0.1f )
+pPID(415.0f, 0.0095f,0.001f, 100.0f, 500.0f, 0.3f, 1.0f ),
+sPID(0.0205f, 0.001f,0.0f, 100.0f, 500.0f, 0.1f, 1.0f )
 {};
 void Motor::canRxMsgCallback(const uint8_t rx_data[8])
 {
     uint16_t raw_ecd = (uint16_t)(rx_data[0] << 8) | rx_data[1];
     int16_t raw_speed =(int16_t)(rx_data[2] << 8) | rx_data[3];
+    
     ecd_angle_ = (float) raw_ecd;
     speedRpm_ = (float) raw_speed;
 
@@ -15,7 +19,7 @@ void Motor::canRxMsgCallback(const uint8_t rx_data[8])
     {
         last_ecd = ecd_angle_;
         received_ = true;
-        angle_ = Ecd_to_dig( last_ecd );
+        angle_ = Ecd_to_dig( last_ecd ) / ratio_;
     }
 
     float delta =  NormalizeDelta(ecd_angle_ - last_ecd);
@@ -67,7 +71,6 @@ void Motor::setTxCurrent(float amperes, uint8_t motor_id)
 
 uint8_t* Motor::getTxData()
 {
-    motor_handle();
     return tx_data_;
 }
 
@@ -91,9 +94,28 @@ void Motor::setSpeed_ffb(float speed_ffb)
     speed_frontfeedback_ = speed_ffb;
 }
 
+void Motor::setk_frontfeedback(float k_frontfeedback)
+{
+    k_frontfeedback_ = k_frontfeedback;
+}
+
 void Motor::motor_handle()
 {
     if (!received_) return;
+
+    if (stop_flag)
+    {
+        sPID.PID_reset();
+        pPID.PID_reset();
+        targetAngle_ = 0.0f;
+        outCurrentA_ = 0.0f;
+        setTxCurrent(0.0f, 1.0f);
+        return;
+    }
+
+    float current_angle = angle_;
+
+    current_frontfeedback_ = 0.94f * sinf(current_angle * 3.1415926f / 180.0f) * k_frontfeedback_;
 
     float pos_out = pPID.calc(targetAngle_,angle_);
 

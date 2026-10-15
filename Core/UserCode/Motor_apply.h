@@ -11,6 +11,7 @@ extern Motor motor1;
 extern "C" {
 #endif
 void motor1_Init();
+void motor1_Handle();
 #ifdef __cplusplus
 }
 #endif

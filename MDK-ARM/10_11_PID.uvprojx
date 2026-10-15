@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Core\UserCode;..\Core\Src</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Core/UserCode;../Core/Src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -395,6 +395,31 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
+              <FileName>callback.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\callback.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>can_user.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\can_user.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\UserCode\Motor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Motor_apply.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\UserCode\Motor_apply.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>PID.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\UserCode\PID.cpp</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -423,31 +448,6 @@
               <FileName>stm32f4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f4xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>callback.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Core\Src\callback.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>can_user.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\can_user.c</FilePath>
-            </File>
-            <File>
-              <FileName>Motor.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Core\UserCode\Motor.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Motor_apply.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Core\UserCode\Motor_apply.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>PID.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Core\UserCode\PID.cpp</FilePath>
             </File>
           </Files>
         </Group>
