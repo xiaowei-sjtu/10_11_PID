@@ -4,8 +4,8 @@
 volatile uint8_t stop_flag = 0;
 
 Motor::Motor(float ratio): ratio_(ratio),
-pPID(415.0f, 0.0095f,0.001f, 100.0f, 500.0f, 0.3f, 1.0f ),
-sPID(0.0205f, 0.001f,0.0f, 100.0f, 500.0f, 0.1f, 1.0f )
+pPID(300.0f, 0.008f,90.0f, 100.0f, 5000.0f, 0.3f, 1.0f ),
+sPID(0.019f, 0.0f,0.0f, 100.0f, 1000.0f, 0.1f, 1.0f )
 {};
 void Motor::canRxMsgCallback(const uint8_t rx_data[8])
 {
